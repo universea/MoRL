@@ -1,17 +1,3 @@
-#   Copyright (c) 2020 PaddlePaddle Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import os
 import gym
 import numpy as np
@@ -78,10 +64,11 @@ def main():
     agent = CartpoleAgent(alg)
 
     # load model and evaluate
-    # if os.path.exists('./model.ckpt'):
-    #     agent.restore('./model.ckpt')
-    #     evaluate(env, agent, render=True)
-    #     exit()
+    if os.path.exists('simple_model.ckpt'):
+        logger.info("restore model succeed and test !")
+        agent.restore('simple_model.ckpt')
+        evaluate(env, agent, render=True)
+        exit()
 
     for i in range(1000):
         obs_list, action_list, reward_list = run_episode(env, agent)
@@ -98,8 +85,8 @@ def main():
             total_reward = evaluate(env, agent, render=True)
             logger.info('Test reward: {}'.format(total_reward))
 
-    # save the parameters to ./model.ckpt
-    agent.save('./model.ckpt')
+    # save the parameters to model.ckpt
+    agent.save('simple_model.ckpt')
 
 
 if __name__ == '__main__':
